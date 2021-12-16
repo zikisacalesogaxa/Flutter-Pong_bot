@@ -71,13 +71,12 @@ class LoginPage extends StatelessWidget {
     return Button(
       text: 'Login',
       onPressed: () async {
-        print({myEmailController.text, myPasswordController.text});
         try {
           await FirebaseAuth.instance.signInWithEmailAndPassword(
             email: myEmailController.text,
             password: myPasswordController.text,
           );
-          Navigator.pushNamed(context, '/dashboard');
+          Navigator.pushReplacementNamed(context, '/dashboard');
         } on FirebaseAuthException catch (e) {
           if (e.code == 'user-not-found') {
             print('No user found for that email.');
@@ -91,7 +90,7 @@ class LoginPage extends StatelessWidget {
 
   Widget _buildRegisterButton(BuildContext context) {
     return Button(
-      text: 'Create account',
+      text: 'Don\'t have an account? Register',
       flat: true,
       textColor: Colors.blue,
       onPressed: () {

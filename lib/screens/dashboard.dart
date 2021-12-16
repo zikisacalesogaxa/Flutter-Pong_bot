@@ -40,7 +40,7 @@ class DashboardPage extends StatelessWidget {
       textColor: Colors.white,
       onPressed: () async {
         await FirebaseAuth.instance.signOut();
-        Navigator.pushNamed(context, "/login");
+        Navigator.pushReplacementNamed(context, "/login");
       },
     );
   }

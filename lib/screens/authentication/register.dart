@@ -1,4 +1,5 @@
 // register screen
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:pong_bot/widgets/input_field.dart';
@@ -76,7 +77,12 @@ class RegisterPage extends StatelessWidget {
             email: myEmailController.text,
             password: myPasswordController.text,
           );
-          Navigator.pushNamed(context, "/dashboard");
+          await addUser(myEmailController.text).then((value) => {
+                print(value),
+                Navigator.pushReplacementNamed(context, "/dashboard"),
+              });
+          myEmailController.clear();
+          myPasswordController.clear();
         } on FirebaseAuthException catch (e) {
           if (e.code == 'weak-password') {
             print('The password provided is too weak.');
@@ -92,7 +98,7 @@ class RegisterPage extends StatelessWidget {
 
   Widget _buildRegisterButton(BuildContext context) {
     return Button(
-      text: 'Already have an account?',
+      text: 'Already have an account? Login',
       flat: true,
       textColor: Colors.blue,
       onPressed: () {
@@ -100,4 +106,22 @@ class RegisterPage extends StatelessWidget {
       },
     );
   }
+}
+
+Future<String> addUser(email) async {
+  CollectionReference players =
+      FirebaseFirestore.instance.collection('players');
+
+  // Call the user's CollectionReference to add a new user
+  return await players
+      .add({
+        'email': email,
+        'wins': 0,
+        'losses': 0,
+        'gamesPlayed': 0,
+        'avg': 0,
+        'playing': false,
+      })
+      .then((value) => "Player Added")
+      .catchError((error) => "Failed to add user: $error");
 }
