@@ -69,12 +69,7 @@ class LoginPage extends StatelessWidget {
   Widget _buildLoginButton(BuildContext context) {
     return Button(
       text: 'Login',
-      onPressed: () {
-        print({
-          myPasswordController.text,
-          myEmailController.text,
-        });
-      },
+      onPressed: () {},
     );
   }
 
