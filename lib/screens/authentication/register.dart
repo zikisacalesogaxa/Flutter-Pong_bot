@@ -1,4 +1,5 @@
 // register screen
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:pong_bot/widgets/input_field.dart';
 import 'package:pong_bot/widgets/button.dart';
@@ -69,7 +70,23 @@ class RegisterPage extends StatelessWidget {
   Widget _buildLoginButton(BuildContext context) {
     return Button(
       text: 'Register',
-      onPressed: () {},
+      onPressed: () async {
+        try {
+          await FirebaseAuth.instance.createUserWithEmailAndPassword(
+            email: myEmailController.text,
+            password: myPasswordController.text,
+          );
+          Navigator.pushNamed(context, "/dashboard");
+        } on FirebaseAuthException catch (e) {
+          if (e.code == 'weak-password') {
+            print('The password provided is too weak.');
+          } else if (e.code == 'email-already-in-use') {
+            print('The account already exists for that email.');
+          }
+        } catch (e) {
+          print(e);
+        }
+      },
     );
   }
 

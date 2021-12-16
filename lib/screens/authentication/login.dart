@@ -1,4 +1,5 @@
 // login screen
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:pong_bot/widgets/input_field.dart';
 import 'package:pong_bot/widgets/button.dart';
@@ -69,7 +70,22 @@ class LoginPage extends StatelessWidget {
   Widget _buildLoginButton(BuildContext context) {
     return Button(
       text: 'Login',
-      onPressed: () {},
+      onPressed: () async {
+        print({myEmailController.text, myPasswordController.text});
+        try {
+          await FirebaseAuth.instance.signInWithEmailAndPassword(
+            email: myEmailController.text,
+            password: myPasswordController.text,
+          );
+          Navigator.pushNamed(context, '/dashboard');
+        } on FirebaseAuthException catch (e) {
+          if (e.code == 'user-not-found') {
+            print('No user found for that email.');
+          } else if (e.code == 'wrong-password') {
+            print('Wrong password provided for that user.');
+          }
+        }
+      },
     );
   }
 
