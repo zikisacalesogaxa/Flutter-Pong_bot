@@ -79,7 +79,6 @@ class RegisterPage extends StatelessWidget {
             password: myPasswordController.text,
           );
           await addPlayer(myEmailController.text).then((value) => {
-                print(value),
                 Navigator.pushReplacementNamed(context, "/dashboard"),
               });
           myEmailController.clear();
