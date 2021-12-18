@@ -1,6 +1,6 @@
 {
-    "name": "pong_bot",
-    "short_name": "pong_bot",
+    "name": "Pong Bot",
+    "short_name": "Pong Bot",
     "start_url": ".",
     "display": "standalone",
     "background_color": "#0175C2",
