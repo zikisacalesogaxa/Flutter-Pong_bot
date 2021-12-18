@@ -76,6 +76,8 @@ class LoginPage extends StatelessWidget {
             email: myEmailController.text,
             password: myPasswordController.text,
           );
+          myEmailController.clear();
+          myPasswordController.clear();
           Navigator.pushReplacementNamed(context, '/dashboard');
         } on FirebaseAuthException catch (e) {
           if (e.code == 'user-not-found') {

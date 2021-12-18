@@ -1,4 +1,5 @@
 // register screen
+import 'dart:math';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
@@ -77,7 +78,7 @@ class RegisterPage extends StatelessWidget {
             email: myEmailController.text,
             password: myPasswordController.text,
           );
-          await addUser(myEmailController.text).then((value) => {
+          await addPlayer(myEmailController.text).then((value) => {
                 print(value),
                 Navigator.pushReplacementNamed(context, "/dashboard"),
               });
@@ -108,7 +109,8 @@ class RegisterPage extends StatelessWidget {
   }
 }
 
-Future<String> addUser(email) async {
+Future<String> addPlayer(email) async {
+  final Random _random = Random();
   CollectionReference players =
       FirebaseFirestore.instance.collection('players');
 
@@ -121,6 +123,7 @@ Future<String> addUser(email) async {
         'gamesPlayed': 0,
         'avg': 0,
         'playing': false,
+        'imageId': _random.nextInt(100).toInt(),
       })
       .then((value) => "Player Added")
       .catchError((error) => "Failed to add user: $error");
