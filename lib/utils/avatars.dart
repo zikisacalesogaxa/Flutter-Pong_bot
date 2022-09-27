@@ -11,7 +11,7 @@ class Avatar extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Image.network(
-      'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/${imageId}.png',
+      'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/$imageId.png',
       height: height ?? 100,
       width: width ?? 100,
     );
